@@ -1,0 +1,100 @@
+.hello{
+	text-align: center;
+}
+
+.style1 {
+    margin-top:70px;
+    margin-bottom: 10px;
+}
+
+.style2 {
+    margin-top: 200px;
+
+}
+
+.style3 {
+    margin-top: 100px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.style4 {
+    margin-top: 150px;
+    max-height:200px;
+    max-width:200px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.style5 {
+    max-width:250px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: auto;
+	max-height:auto;
+}
+
+.style6 {
+    margin-top:100px;
+    margin-bottom: 10px;
+}
+
+.tablestyle1 {
+    width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    margin-top: 150px;
+}
+
+.img-size {
+	height: 150px;
+	width: auto;
+}
+
+.img-size2 {
+	height: 600px;
+	width: auto;
+}
+
+.tablestyle2 {
+    width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.tablestyle3 {
+    width: 300px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.backcolor1 {
+    background-color: #eaeaea;
+}
+
+.table {
+    background-color: #eaeaea;
+}
+
+.buttonstyle1{
+	max-width: 500px;
+}
+
+.center{
+  border: 1px solid #aaa;
+  width: 400px;
+  text-align: center;
+}
+
+.card-size {
+	height: 350px;
+}
+
+.card-size2 {
+	height: 750px;
+}
