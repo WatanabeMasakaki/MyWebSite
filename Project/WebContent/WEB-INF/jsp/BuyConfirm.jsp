@@ -12,13 +12,13 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>商品検索画面</title>
+<title>購入最終確認</title>
 </head>
-
 <body>
+
 <nav class="navbar navbar-dark bg-dark">
   <form class="form-inline mt-2 mt-md-0">
-    <h3 class="text-light bg-dark"><strong>商品検索画面　</strong></h3>
+    <h3 class="text-light bg-dark"><strong>購入最終確認　</strong></h3>
   </form>
   <form class="form-inline mt-2 mt-md-0">
     <h4 class="text-light bg-dark">${userInfo.name}様　</h4>
@@ -43,44 +43,41 @@
   </form>
 </nav>
 
-<form method="post" action="ItemSearchResult">
-<div class="card bg-light mb-3 shadow" style="max-width: 40rem; margin-top: 80px; margin-bottom: 40px; margin-right: auto; margin-left: auto; text-align: left;">
- <div class="float-right">
-  <div class="col">
-    <h6>商品検索</h6>
-    <input type="text" class="form-control" id="exampleInputEmail1" name= "itemSerchWord" >
-  </div>
- </div>
- <div class="card-body" style="text-align:center">
-    <button type="submit" class="btn btn-primary"  id="itemSerchWord" >　　　商品検索　　　</button>
- </div>
-</div>
-</form>
+<table class="table tablestyle6 shadow border border-secondary">
+  <thead>
+    <tr>
+      <th scope="row">商品名</th>
+      <th scope="row">単価</th>
+      <th scope="row">小計</th>
+    </tr>
+  </thead>
+								<tbody>
+									<c:forEach var="item" items="${cart}" >
+										<tr>
+											<th scope="row">${item.name}</th>
+											<th scope="row">${item.price}円</th>
+											<th scope="row">${item.price}円</th>
+										</tr>
+									</c:forEach>
+									<tr>
+										<td scope="row">${bdb.deliveryMethodName}</td>
+										<td scope="row"></td>
+										<td scope="row">${bdb.deliveryMethodPrice}円</td>
+									</tr>
 
-<div class="text-center style6">
- <h2> おすすめ商品</h2>
-</div>
-	<div class="container">
-		<div class="section">
-			<!--   おすすめ商品   -->
-			<div class="row">
-			 <c:forEach var="item" items="${itemList}">
-				<div class="col s12 m3 text-center">
-					<div class="card shadow card-size3 border-secondary">
-						<div class="card-image border border-secondary">
-							<a href="Item?item_id=${item.id}"><img src="img/${item.fileName}"></a>
+									<tr>
+										<td class="center">合計</td>
+										<td class="center"></td>
+										<td class="center">${bdb.totalPrice}円</td>
+									</tr>
+								</tbody>
+</table>
+						<div class="row tablestyle5">
+							<div class="col s12">
+								<form action="BuyResult" method="post">
+									<button class="btn  waves-effect waves-light  col s4 offset-s4" type="submit">購入確定</button>
+								</form>
+							</div>
 						</div>
-						<div class="card-content">
-							<span class="card-title">${item.name}</span>
-							<p>${item.price}円</p>
-                            <input type="button" value="　詳細を見る　" class="btn btn-primary gazou-size2" onClick="location.href='Item?itemid=${item.id}'"></input>
-						</div>
-					</div>
-				</div>
-			  </c:forEach>
-			</div>
-		</div>
-	</div>
-</body>
 
 </html>

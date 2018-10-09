@@ -12,13 +12,13 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>商品検索画面</title>
+<title>カートの中身</title>
 </head>
-
 <body>
+
 <nav class="navbar navbar-dark bg-dark">
   <form class="form-inline mt-2 mt-md-0">
-    <h3 class="text-light bg-dark"><strong>商品検索画面　</strong></h3>
+    <h3 class="text-light bg-dark"><strong>カートの中身　</strong></h3>
   </form>
   <form class="form-inline mt-2 mt-md-0">
     <h4 class="text-light bg-dark">${userInfo.name}様　</h4>
@@ -43,44 +43,44 @@
   </form>
 </nav>
 
-<form method="post" action="ItemSearchResult">
-<div class="card bg-light mb-3 shadow" style="max-width: 40rem; margin-top: 80px; margin-bottom: 40px; margin-right: auto; margin-left: auto; text-align: left;">
- <div class="float-right">
-  <div class="col">
-    <h6>商品検索</h6>
-    <input type="text" class="form-control" id="exampleInputEmail1" name= "itemSerchWord" >
-  </div>
+<div class="text-center">
+<form action="ItemDelete" method="post">
+ <div class="style1a inline">
+	<button class="btn btn-primary my-2 center" type="submit" name="action">削除</button>
  </div>
- <div class="card-body" style="text-align:center">
-    <button type="submit" class="btn btn-primary"  id="itemSerchWord" >　　　商品検索　　　</button>
+ <div class="style1a inline">
+    <a href="BuyCarItem" class="btn btn-secondary my-2 center" >レジに進む</a>
  </div>
-</div>
-</form>
+ </div>
 
-<div class="text-center style6">
- <h2> おすすめ商品</h2>
-</div>
-	<div class="container">
+<div class="text-center">
+	<div class="container" style="text-align:center;">
 		<div class="section">
-			<!--   おすすめ商品   -->
+			<!--   検索結果   -->
 			<div class="row">
-			 <c:forEach var="item" items="${itemList}">
-				<div class="col s12 m3 text-center">
-					<div class="card shadow card-size3 border-secondary">
-						<div class="card-image border border-secondary">
+			  <c:forEach var="item" items="${cart}" varStatus="status">
+				<div class="col-3 s12 m3">
+					<div class="card card-size3 border border-secondary">
+						<div class="card-image card-size3">
 							<a href="Item?item_id=${item.id}"><img src="img/${item.fileName}"></a>
 						</div>
-						<div class="card-content">
+						<div class="card-content shadow">
 							<span class="card-title">${item.name}</span>
-							<p>${item.price}円</p>
-                            <input type="button" value="　詳細を見る　" class="btn btn-primary gazou-size2" onClick="location.href='Item?itemid=${item.id}'"></input>
+							 <p>${item.price}円</p>
+                                <input type="button" value="詳細を見る" class="btn btn-primary gazou-size2" onClick="location.href='Item?itemid=${item.id}'"></input>
+                                <input type="checkbox" id="${status.index}" name="delete_item_id_list" value="${item.id}" /> <label for="${status.index}">削除する</label>
 						</div>
 					</div>
 				</div>
 			  </c:forEach>
 			</div>
 		</div>
-	</div>
-</body>
+    </div>
+</form>
+  <div class="text-center style1">
+    <a href="SerchResult" class="btn btn-secondary my-2 center" >商品検索画面に戻る</a>
+  </div>
 
+
+</body>
 </html>

@@ -1,6 +1,7 @@
 package ec2;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;// フォワード
 import javax.servlet.ServletException;
@@ -51,10 +52,17 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// リクエストパラメータの文字コードを指定
 		request.setCharacterEncoding("UTF-8");
+		// HttpSessionインスタンスの取得
+		HttpSession session = request.getSession();
 
+	try {
 		// リクエストパラメータの入力項目を取得
 		String loginid = request.getParameter("loginid");
 		String password = request.getParameter("password");
+
+		//ユーザーIDを取得(購入履歴(BuyDateHistory)で確認で使う)
+		int userId = UserDao.getUserId(loginid, password);
+		session.setAttribute("userId", userId);
 
 		// リクエストパラメータの入力項目を引数に渡して、Daoのメソッドを実行
 		UserDao userDao = new UserDao();
@@ -72,11 +80,14 @@ public class Login extends HttpServlet {
 		}
 		/** テーブルに該当のデータが見つかった場合 **/
 		// セッションスコープにユーザの情報をセット
-				HttpSession session = request.getSession();
-				session.setAttribute("userInfo", user);
+		session = request.getSession();
+		session.setAttribute("userInfo", user);
+		// 商品一覧のサーブレットにリダイレクト
+		response.sendRedirect("SerchResult");
 
-				// 商品一覧のサーブレットにリダイレクト
-				response.sendRedirect("SerchResult");
+   }catch (SQLException e) {
+		// TODO 自動生成された catch ブロック
+		e.printStackTrace();
 	}
-
+  }
 }

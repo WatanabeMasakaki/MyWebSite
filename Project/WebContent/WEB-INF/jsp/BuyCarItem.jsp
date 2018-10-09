@@ -12,13 +12,13 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>商品検索画面</title>
+<title>商品購入確認</title>
 </head>
-
 <body>
+
 <nav class="navbar navbar-dark bg-dark">
   <form class="form-inline mt-2 mt-md-0">
-    <h3 class="text-light bg-dark"><strong>商品検索画面　</strong></h3>
+    <h3 class="text-light bg-dark"><strong>商品購入確認　</strong></h3>
   </form>
   <form class="form-inline mt-2 mt-md-0">
     <h4 class="text-light bg-dark">${userInfo.name}様　</h4>
@@ -27,9 +27,7 @@
     <i class="fas fa-users backcolor1 fa-2x fa-border faa-bounce animated-hover" type="button" 　data-toggle="tooltip" data-placement="bottom" title="ユーザーリスト"onClick="location.href='UserList'"></i>
     <i class="fas fa-shopping-cart backcolor1 fa-2x fa-border faa-bounce animated-hover" type="button" 　data-toggle="tooltip" data-placement="bottom" title="カートの中身"onClick="location.href='Cart'"></i>
     <i class="fas fa-history backcolor1 fa-2x fa-border faa-bounce animated-hover" type="button" 　data-toggle="tooltip" data-placement="bottom" title="購入履歴"onClick="location.href='BuyDateHistory'"></i>
-
     <div class="dropdown">
-
      <i class="fas fa-user-cog backcolor1 fa-2x fa-border dropdown-toggle" role="button" data-toggle="dropdown" type="button"　data-toggle="tooltip" data-placement="bottom" title="マスタデータ"></i>
   <!-- ドロップメニューの設定 -->
      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -43,44 +41,46 @@
   </form>
 </nav>
 
-<form method="post" action="ItemSearchResult">
-<div class="card bg-light mb-3 shadow" style="max-width: 40rem; margin-top: 80px; margin-bottom: 40px; margin-right: auto; margin-left: auto; text-align: left;">
- <div class="float-right">
-  <div class="col">
-    <h6>商品検索</h6>
-    <input type="text" class="form-control" id="exampleInputEmail1" name= "itemSerchWord" >
-  </div>
- </div>
- <div class="card-body" style="text-align:center">
-    <button type="submit" class="btn btn-primary"  id="itemSerchWord" >　　　商品検索　　　</button>
- </div>
+<form action="BuyConfirm" method="post">
+<table class="table tablestyle1 shadow">
+  <thead>
+    <tr>
+      <th>画像</th>
+      <th scope="col">商品名</th>
+      <th scope="col">単価</th>
+      <th scope="col">小計</th>
+    </tr>
+  </thead>
+  <c:forEach var="item" items="${cart}">
+  <tbody>
+    <tr>
+      <th><a href="Item?item_id=${item.id}"><img src="img/${item.fileName}" onClick="location.href='Item?itemid=${item.id}'"></a></th>
+      <th scope="row">${item.name}</th>
+      <td>${item.price}円</td>
+      <td>${item.price}円</td>
+    </tr>
+  </tbody>
+  </c:forEach>
+</table>
+
+<div class="alert alert-success tablestyle4 shadow" role="alert">
+  <h4 class="alert-heading">
+    <div class="input-field">
+	  <select name="delivery_method_id" style="width: 10rem; font-size: x-large;">
+	    <c:forEach var="dmdb" items="${dmdbList}" >
+		  <option value="${dmdb.id}">${dmdb.name}</option>
+	    </c:forEach>
+	  </select> <label>配送方法</label>
+	</div>
+  </h4>
+    <hr>
+     <p class="mb-0">
+      <div class="card-body" style="text-align:center">
+       <button type="submit" class="btn btn-primary shadow" >　　購入確認　　</button>
+      </div>
+     </p>
 </div>
 </form>
 
-<div class="text-center style6">
- <h2> おすすめ商品</h2>
-</div>
-	<div class="container">
-		<div class="section">
-			<!--   おすすめ商品   -->
-			<div class="row">
-			 <c:forEach var="item" items="${itemList}">
-				<div class="col s12 m3 text-center">
-					<div class="card shadow card-size3 border-secondary">
-						<div class="card-image border border-secondary">
-							<a href="Item?item_id=${item.id}"><img src="img/${item.fileName}"></a>
-						</div>
-						<div class="card-content">
-							<span class="card-title">${item.name}</span>
-							<p>${item.price}円</p>
-                            <input type="button" value="　詳細を見る　" class="btn btn-primary gazou-size2" onClick="location.href='Item?itemid=${item.id}'"></input>
-						</div>
-					</div>
-				</div>
-			  </c:forEach>
-			</div>
-		</div>
-	</div>
 </body>
-
 </html>

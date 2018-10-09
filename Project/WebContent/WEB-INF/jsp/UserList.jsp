@@ -12,13 +12,13 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>商品検索画面</title>
+<title>ユーザーリスト画面</title>
 </head>
-
 <body>
+
 <nav class="navbar navbar-dark bg-dark">
   <form class="form-inline mt-2 mt-md-0">
-    <h3 class="text-light bg-dark"><strong>商品検索画面　</strong></h3>
+    <h3 class="text-light bg-dark"><strong>ユーザーリスト画面　</strong></h3>
   </form>
   <form class="form-inline mt-2 mt-md-0">
     <h4 class="text-light bg-dark">${userInfo.name}様　</h4>
@@ -43,44 +43,82 @@
   </form>
 </nav>
 
-<form method="post" action="ItemSearchResult">
-<div class="card bg-light mb-3 shadow" style="max-width: 40rem; margin-top: 80px; margin-bottom: 40px; margin-right: auto; margin-left: auto; text-align: left;">
- <div class="float-right">
+
+<form method="post" action="UserList" style="text-align:center">
+<div class="card bg-light mb-3 shadow" style="max-width: 30rem; margin-top: 100px; margin-bottom: 50px; margin-right: auto; margin-left: auto; text-align: left;">
+ <div class="card-header text-white bg-secondary">
+  <button class="btn btn-primary" type="submit">ユーザー検索</button>
+ </div>
+<div class="float-right">
   <div class="col">
-    <h6>商品検索</h6>
-    <input type="text" class="form-control" id="exampleInputEmail1" name= "itemSerchWord" >
+    <label for="exampleInputEmail1"><strong>ログインID</strong></label>
+    <input type="text" name="loginid" class="form-control" id="exampleInputEmail1" placeholder="ログインIDで検索">
+  </div>
+  <div class="col">
+    <label for="exampleInputEmail1"><strong>ユーザー名</strong></label>
+    <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="ユーザー名で検索">
   </div>
  </div>
- <div class="card-body" style="text-align:center">
-    <button type="submit" class="btn btn-primary"  id="itemSerchWord" >　　　商品検索　　　</button>
+ <div class="form-group">
+  <label for="exampleInputEmail1"><strong>生年月日</strong></label>
+    <div class="row">
+     <div class="col">
+       <input type="date" name="datestart" id="date-start" class="form-control" placeholder="年/月/日"/>
+     </div>
+     <div class="col-xs-1 text-center">
+       ~
+     </div>
+     <div class="col">
+       <input type="date" name="dateend" id="date-end" class="form-control" placeholder="年/月/日"/>
+     </div>
+    </div>
  </div>
 </div>
+ <div>
+  <button type="submit" class="btn btn-primary" >　　ユーザー検索　　</button>
+ </div>
 </form>
 
-<div class="text-center style6">
- <h2> おすすめ商品</h2>
-</div>
-	<div class="container">
-		<div class="section">
-			<!--   おすすめ商品   -->
-			<div class="row">
-			 <c:forEach var="item" items="${itemList}">
-				<div class="col s12 m3 text-center">
-					<div class="card shadow card-size3 border-secondary">
-						<div class="card-image border border-secondary">
-							<a href="Item?item_id=${item.id}"><img src="img/${item.fileName}"></a>
-						</div>
-						<div class="card-content">
-							<span class="card-title">${item.name}</span>
-							<p>${item.price}円</p>
-                            <input type="button" value="　詳細を見る　" class="btn btn-primary gazou-size2" onClick="location.href='Item?itemid=${item.id}'"></input>
-						</div>
-					</div>
-				</div>
-			  </c:forEach>
-			</div>
-		</div>
-	</div>
-</body>
 
+<div class="card bg-light mb-3 shadow" style="max-width: 80rem; margin-top: 100px; margin-bottom: 50px; margin-right: auto; margin-left: auto;">
+<div class="card-header"><strong>検索結果</strong></div>
+<table class="table">
+  <thead class="bg-secondary text-white">
+    <tr>
+      <th scope="col">ログインID</th>
+      <th scope="col">ユーザー名</th>
+      <th scope="col">生年月日</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+   <c:forEach var="user" items="${userList}">
+    <tr>
+      <th scope="row">${user.login_id}</th>
+      <td>${user.name}</td>
+      <td>${user.birth_date}</td>
+      <td>
+          <input type="button" value="詳細" onClick="location.href='UserDetail?id=${user.id}'">
+
+         <!--ログインした(入力した)ユーザーのログインIDと表示するユーザーのログインIDの比較-->
+          <c:if test = '${userInfo.login_id.equals(user.login_id) || userInfo.login_id.equals("admin") }'>
+           <input type="button" value="更新" onClick="location.href='UserUpdate?id=${user.id}'">
+          </c:if>
+
+          <c:if test = '${userInfo.login_id.equals("admin")}'>
+           <input type="button" value="削除" onClick="location.href='UserDelete?id=${user.id}'">
+          </c:if>
+      </td>
+    </tr>
+   </c:forEach>
+  </tbody>
+</table>
+</div>
+<div class="card-body" style="text-align:center">
+  <form method="get" action="SerchResult" id="login">
+    <button type="submit" class="btn btn-primary" >　　商品検索画面へ　　</button>
+  </form>
+</div>
+
+</body>
 </html>
